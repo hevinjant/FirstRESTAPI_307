@@ -58,7 +58,15 @@ def hello_world():
 def get_users():
    if request.method == 'GET':
       search_username = request.args.get('name')
-      if search_username :
+      search_job = request.args.get('job')
+      #print(search_username,search_job)
+      if search_username and search_job:
+         subdict = {'users_list' : []}
+         for user in users['users_list']:
+            if user['name'] == search_username or user['job'] == search_job:
+               subdict['users_list'].append(user)
+         return subdict
+      elif search_username :
          subdict = {'users_list' : []}
          for user in users['users_list']:
             if user['name'] == search_username:
@@ -73,11 +81,18 @@ def get_users():
       # 200 is the default code for a normal response
       return resp
 
-@app.route('/users/<id>')
+@app.route('/users/<id>', methods=['DELETE'])
 def get_user(id):
-   if id :
-      for user in users['users_list']:
-        if user['id'] == id:
-           return user
-      return ({})
+   if request.method == 'DELETE':
+      if id :
+         for user in users['users_list']:
+            if user['id'] == id:
+               users['users_list'].remove(user)
+               return users
+   elif request.method == 'GET':
+      if id :
+         for user in users['users_list']:
+            if user['id'] == id:
+               return user
+            return ({})
    return users
