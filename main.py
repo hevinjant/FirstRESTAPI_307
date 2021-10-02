@@ -83,7 +83,7 @@ def get_users():
       return users
    elif request.method == 'POST':
       userToAdd = request.get_json()
-      userToAdd['id'] = uuid.uuid4()
+      userToAdd['id'] = str(uuid.uuid4())
       users['users_list'].append(userToAdd)
       print(users)
       resp = jsonify(userToAdd)
