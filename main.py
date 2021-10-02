@@ -101,9 +101,13 @@ def get_user(id):
                users['users_list'].remove(user)
                #return users
                resp = jsonify(success=True)
+               resp.status_code = 204
                #resp.status_code = 200 #optionally, you can always set a response code. 
                # 200 is the default code for a normal response
                return resp
+         resp = jsonify(success=False)
+         resp.status_code = 404
+         return resp
    elif request.method == 'GET':
       if id :
          for user in users['users_list']:
