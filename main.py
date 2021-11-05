@@ -53,7 +53,7 @@ users = {
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST']) #http://localhost:5000/name=Mac&job=Janitor
 def get_users():
    if request.method == 'GET':
       search_username = request.args.get('name')
